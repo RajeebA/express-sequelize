@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: false,
       },
       type: {
-        type: String,
+        type: DataTypes.ENUM([tokenTypes.REFRESH, tokenTypes.RESET_PASSWORD, tokenTypes.VERIFY_EMAIL]),
         enum: [tokenTypes.REFRESH, tokenTypes.RESET_PASSWORD, tokenTypes.VERIFY_EMAIL],
         required: true,
       },
