@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 const { Model } = require('sequelize');
 const bcrypt = require('bcryptjs');
 const { roles } = require('../config/roles');
@@ -15,6 +16,13 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init(
     {
+      id: {
+        type: DataTypes.UUID,
+        primaryKey: true,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false,
+        autoIncrement: false,
+      },
       firstName: DataTypes.STRING,
       lastName: DataTypes.STRING,
       email: { type: DataTypes.STRING, allowNull: false, unique: true },
@@ -41,9 +49,8 @@ module.exports = (sequelize, DataTypes) => {
     const user = this;
     return bcrypt.compare(password, user.password);
   };
-  User.addHook('beforeCreate', async (password) => {
-    const user = this;
-    user.password = await bcrypt.hash(password, 8);
+  User.addHook('beforeCreate', async (user) => {
+    user.password = await bcrypt.hash(user.password, 8);
   });
   return User;
 };

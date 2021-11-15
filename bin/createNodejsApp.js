@@ -31,7 +31,7 @@ async function hasYarn() {
 if (process.argv.length < 3) {
   console.log('Please specify the target project directory.');
   console.log('For example:');
-  console.log('    npx create-nodejs-app my-app');
+  console.log('    npx create-nodejs-sequelize-app my-app');
   console.log('    OR');
   console.log('    npm init nodejs-app my-app');
   process.exit(1);
@@ -41,7 +41,7 @@ if (process.argv.length < 3) {
 const ownPath = process.cwd();
 const folderName = process.argv[2];
 const appPath = path.join(ownPath, folderName);
-const repo = 'https://github.com/hagopj13/node-express-boilerplate.git';
+const repo = 'https://github.com/RajeebA/express-sequelize';
 
 // Check if directory already exists
 try {
