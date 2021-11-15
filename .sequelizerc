@@ -1,0 +1,12 @@
+const path = require("path");
+const config = require("./src/config/config.js");
+const { host, port, dialect, username, password, database } = config.db
+
+module.exports = {
+  "models-path": path.resolve("./src/models"),
+  "seeders-path": path.resolve("./src/seeders"),
+  "migrations-path": path.resolve("./src/migrations"),
+  url: `${dialect}://${encodeURIComponent(username)}:${encodeURIComponent(
+    password
+  )}:@${host}:${port}/${encodeURIComponent(database)}`
+};
