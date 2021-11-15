@@ -1,8 +1,19 @@
+const { Model } = require('sequelize');
+const bcrypt = require('bcryptjs');
 const { roles } = require('../config/roles');
 
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define(
-    'User',
+  class User extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate() {
+      // define association here
+    }
+  }
+  User.init(
     {
       firstName: DataTypes.STRING,
       lastName: DataTypes.STRING,
@@ -20,11 +31,19 @@ module.exports = (sequelize, DataTypes) => {
         default: false,
       },
     },
-    {}
+    {
+      sequelize,
+      modelName: 'User',
+      paranoid: true,
+    }
   );
-  // eslint-disable-next-line no-unused-vars
-  User.associate = function (models) {
-    // associations can be defined here
+  Model.prototype.isPasswordMatch = async function (password) {
+    const user = this;
+    return bcrypt.compare(password, user.password);
   };
+  User.addHook('beforeCreate', async (password) => {
+    const user = this;
+    user.password = await bcrypt.hash(password, 8);
+  });
   return User;
 };

@@ -1,3 +1,6 @@
+/* eslint-disable global-require */
+/* eslint-disable security/detect-non-literal-require */
+/* eslint-disable import/no-dynamic-require */
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
@@ -14,12 +17,11 @@ fs.readdirSync(__dirname)
     return file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js';
   })
   .forEach((file) => {
-    const model = sequelize.import(path.join(__dirname, file));
+    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
     models[model.name] = model;
   });
-
 Object.keys(models).forEach((modelName) => {
-  if (db[modelName].associate) {
+  if (models[modelName].associate) {
     models[modelName].associate(models);
   }
 });
