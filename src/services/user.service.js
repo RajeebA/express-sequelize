@@ -1,6 +1,20 @@
 const httpStatus = require('http-status');
-const { User } = require('../models_sample');
+const { Op } = require('sequelize');
+const { User } = require('../models');
 const ApiError = require('../utils/ApiError');
+
+const isEmailTaken = async (email, userId) => {
+  const user = await User.findOne({ where: { email, id: { [Op.ne]: userId } } });
+  return !!user;
+};
+/**
+ * Get user by email
+ * @param {string} email
+ * @returns {Promise<User>}
+ */
+const getUserByEmail = async (email) => {
+  return User.findOne({ where: { email } });
+};
 
 /**
  * Create a user
@@ -8,43 +22,38 @@ const ApiError = require('../utils/ApiError');
  * @returns {Promise<User>}
  */
 const createUser = async (userBody) => {
-  if (await User.isEmailTaken(userBody.email)) {
+  if (await getUserByEmail(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
   const user = await User.create(userBody);
   return user;
 };
 
+const paginateUsers = async (filter, options, conditions) => {
+  const users = await User.findAll({ ...filter, ...options, where: conditions });
+  return users;
+};
 /**
  * Query for users
- * @param {Object} filter - Mongo filter
+ * @param {Object} filter - Sequelize filter
  * @param {Object} options - Query options
- * @param {string} [options.sortBy] - Sort option in the format: sortField:(desc|asc)
+ * @param {string} [options.sortBy] - Sort option in the format: ['field1','ASC'],['field2','DESC']
  * @param {number} [options.limit] - Maximum number of results per page (default = 10)
  * @param {number} [options.page] - Current page (default = 1)
  * @returns {Promise<QueryResult>}
  */
-const queryUsers = async (filter, options) => {
-  const users = await User.paginate(filter, options);
+const queryUsers = async (filter, options, conditions) => {
+  const users = await paginateUsers(filter, options, conditions);
   return users;
 };
 
 /**
  * Get user by id
- * @param {ObjectId} id
+ * @param {UUID} id
  * @returns {Promise<User>}
  */
 const getUserById = async (id) => {
-  return User.findById(id);
-};
-
-/**
- * Get user by email
- * @param {string} email
- * @returns {Promise<User>}
- */
-const getUserByEmail = async (email) => {
-  return User.findOne({ email });
+  return User.findByPk(id);
 };
 
 /**
@@ -58,7 +67,7 @@ const updateUserById = async (userId, updateBody) => {
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
-  if (updateBody.email && (await User.isEmailTaken(updateBody.email, userId))) {
+  if (updateBody.email && (await isEmailTaken(updateBody.email, userId))) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
   Object.assign(user, updateBody);
@@ -76,7 +85,7 @@ const deleteUserById = async (userId) => {
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
-  await user.remove();
+  await User.destroy({ where: { id: userId } });
   return user;
 };
 
