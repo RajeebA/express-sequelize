@@ -30,7 +30,7 @@ If you would still prefer to do the installation manually, follow these steps:
 Clone the repo:
 
 ```bash
-git clone --depth 1 https://github.com/hagopj13/node-express-boilerplate.git
+git clone --depth 1 https://github.com/RajeebA/express-sequelize.git
 cd node-express-boilerplate
 npx rimraf ./.git
 ```
@@ -67,11 +67,11 @@ cp .env.example .env
 
 ## Features
 
-- **NoSQL database**: [MongoDB](https://www.mongodb.com) object data modeling using [Mongoose](https://mongoosejs.com)
+- **SQL database**: [PostgreSQL](https://www.postgresql.org) object Relational mapping using [sequelize](https://sequelize.org/)
 - **Authentication and authorization**: using [passport](http://www.passportjs.org)
 - **Validation**: request data validation using [Joi](https://github.com/hapijs/joi)
 - **Logging**: using [winston](https://github.com/winstonjs/winston) and [morgan](https://github.com/expressjs/morgan)
-- **Testing**: unit and integration tests using [Jest](https://jestjs.io)
+<!-- - **Testing**: unit and integration tests using [Jest](https://jestjs.io) -->
 - **Error handling**: centralized error handling mechanism
 - **API documentation**: with [swagger-jsdoc](https://github.com/Surnet/swagger-jsdoc) and [swagger-ui-express](https://github.com/scottie1984/swagger-ui-express)
 - **Process management**: advanced production process management using [PM2](https://pm2.keymetrics.io)
@@ -81,8 +81,8 @@ cp .env.example .env
 - **Santizing**: sanitize request data against xss and query injection
 - **CORS**: Cross-Origin Resource-Sharing enabled using [cors](https://github.com/expressjs/cors)
 - **Compression**: gzip compression with [compression](https://github.com/expressjs/compression)
-- **CI**: continuous integration with [Travis CI](https://travis-ci.org)
-- **Docker support**
+  <!-- - **CI**: continuous integration with [Travis CI](https://travis-ci.org) -->
+  <!-- - **Docker support** -->
 - **Code coverage**: using [coveralls](https://coveralls.io)
 - **Code quality**: with [Codacy](https://www.codacy.com)
 - **Git hooks**: with [husky](https://github.com/typicode/husky) and [lint-staged](https://github.com/okonet/lint-staged)
@@ -116,7 +116,7 @@ yarn test:watch
 yarn coverage
 ```
 
-Docker:
+<!-- Docker:
 
 ```bash
 # run docker container in development mode
@@ -127,7 +127,7 @@ yarn docker:prod
 
 # run all tests in a docker container
 yarn docker:test
-```
+``` -->
 
 Linting:
 
@@ -153,8 +153,8 @@ The environment variables can be found and modified in the `.env` file. They com
 # Port number
 PORT=3000
 
-# URL of the Mongo DB
-MONGODB_URL=mongodb://127.0.0.1:27017/node-boilerplate
+# # URL of the Mongo DB
+# MONGODB_URL=mongodb://127.0.0.1:27017/node-boilerplate
 
 # JWT
 # JWT secret key
@@ -181,7 +181,7 @@ src\
  |--controllers\    # Route controllers (controller layer)
  |--docs\           # Swagger files
  |--middlewares\    # Custom express middlewares
- |--models\         # Mongoose models (data layer)
+ |--models\         # Sequelize models (data layer)
  |--routes\         # Routes
  |--services\       # Business logic (service layer)
  |--utils\          # Utility classes and functions
@@ -347,7 +347,7 @@ This app uses pm2 in production mode, which is already configured to store the l
 
 Note: API request information (request url, response code, timestamp, etc.) are also automatically logged (using [morgan](https://github.com/expressjs/morgan)).
 
-## Custom Mongoose Plugins
+<!-- ## Custom Mongoose Plugins
 
 The app also contains 2 custom mongoose plugins that you can attach to any mongoose model schema. You can find the plugins in `src/models/plugins`.
 
@@ -365,8 +365,9 @@ const userSchema = mongoose.Schema(
 userSchema.plugin(toJSON);
 userSchema.plugin(paginate);
 
-const User = mongoose.model('User', userSchema);
-```
+const User = mongoose.model('User', userSchema); -->
+
+<!-- ````
 
 ### toJSON
 
@@ -386,7 +387,7 @@ const queryUsers = async (filter, options) => {
   const users = await User.paginate(filter, options);
   return users;
 };
-```
+````
 
 The `filter` param is a regular mongo filter.
 
@@ -412,7 +413,7 @@ The `paginate` method returns a Promise, which fulfills with an object having th
   "totalPages": 10,
   "totalResults": 48
 }
-```
+``` -->
 
 ## Linting
 
@@ -436,6 +437,6 @@ Contributions are more than welcome! Please check out the [contributing guide](C
 - [madhums/node-express-mongoose](https://github.com/madhums/node-express-mongoose)
 - [kunalkapadia/express-mongoose-es6-rest-api](https://github.com/kunalkapadia/express-mongoose-es6-rest-api)
 
-## License
+<!-- ## License
 
-[MIT](LICENSE)
+[MIT](LICENSE) -->
