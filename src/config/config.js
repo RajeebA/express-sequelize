@@ -49,6 +49,10 @@ module.exports = {
     port: envVars.DB_PORT,
     operatorsAliases: false,
     ssl: true,
+    native: true,
+    dialectOptions: {
+      ssl: true,
+    },
   },
   jwt: {
     secret: envVars.JWT_SECRET,
