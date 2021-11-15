@@ -1,4 +1,4 @@
-const { tokenTypes } = require('../config/tokens');
+// const { tokenTypes } = require('../config/tokens');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -27,11 +27,11 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
       },
-      type: {
-        type: String,
-        enum: [tokenTypes.REFRESH, tokenTypes.RESET_PASSWORD, tokenTypes.VERIFY_EMAIL],
-        required: true,
-      },
+      // type: {
+      //   type: String,
+      //   enum: [tokenTypes.REFRESH, tokenTypes.RESET_PASSWORD, tokenTypes.VERIFY_EMAIL],
+      //   required: true,
+      // },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
