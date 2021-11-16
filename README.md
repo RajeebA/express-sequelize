@@ -14,13 +14,7 @@ By running a single command, you will get a production-ready Node.js app install
 To create a project, simply run:
 
 ```bash
-npx create-nodejs-express-app <project-name>
-```
-
-Or
-
-```bash
-npm init nodejs-express-app <project-name>
+npx sequelize-express-generator <project-name>
 ```
 
 ## Manual Installation
