@@ -1,6 +1,15 @@
 const { Model } = require('sequelize');
 const { tokenTypes } = require('../config/tokens');
 
+/**
+ * @typedef {import('sequelize').Sequelize} Sequelize
+ * @typedef {import('sequelize/types')} DataTypes
+ */
+
+/**
+ * @param {DataTypes} DataTypes
+ * @param {Sequelize} sequelize
+ */
 module.exports = (sequelize, DataTypes) => {
   class token extends Model {
     /**

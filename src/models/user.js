@@ -3,6 +3,16 @@ const { Model } = require('sequelize');
 const bcrypt = require('bcryptjs');
 const { roles } = require('../config/roles');
 
+/**
+ * @typedef {import('sequelize').Sequelize} Sequelize
+ * @typedef {import('sequelize/types')} DataTypes
+ */
+
+/**
+ * @param {DataTypes} DataTypes
+ * @param {Sequelize} sequelize
+ */
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
