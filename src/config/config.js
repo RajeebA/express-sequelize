@@ -47,7 +47,7 @@ module.exports = {
     host: envVars.DB_HOST,
     dialect: envVars.DB_DIALECT,
     port: envVars.DB_PORT,
-    operatorsAliases: false,
+    operatorsAliases: 0,
   },
   jwt: {
     secret: envVars.JWT_SECRET,
